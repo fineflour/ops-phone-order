@@ -3,7 +3,7 @@ require 'sanitize'
 
 class TwilioController < ApplicationController
 
-ENG_MP3 = ['STE-020', 'STE-021', 'STE-022', 'STE-024', 'STE-025', 'STE-026', 'STE-028', 'SET-030', 'SET--037']
+ENG_MP3 = ['./audio/eng/STE-019.mp3','./audio/eng/STE-020.mp3', 'STE-021', 'STE-022', 'STE-024', 'STE-025', 'STE-026', 'STE-028', 'SET-030', 'SET--037']
   
   def index
     render text: "Dial Me."
@@ -13,12 +13,8 @@ ENG_MP3 = ['STE-020', 'STE-021', 'STE-022', 'STE-024', 'STE-025', 'STE-026', 'ST
   def ivr_welcome
     response = Twilio::TwiML::Response.new do |r|
       r.Gather numDigits: '#', action: menu_path do |g|
-        ENG_MP3.each do |e|
-          audio ="./audio/eng/" + e + ".mp3"
-          put audio
-          g.Play e, loop: 3
+          g.Play ENG_MP3[0], loop: 3
           g.Record :maxLength => '30' 
-        end
       end
     end
     render text: response.text
