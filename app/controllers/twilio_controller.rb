@@ -14,9 +14,9 @@ ENG_MP3 = ['./audio/eng/STE-019.mp3','./audio/eng/STE-020.mp3', 'STE-021', 'STE-
     response = Twilio::TwiML::Response.new do |r|
       #r.Gather action: menu_path do |g|
       r.Play "http://75.119.204.130/ivr/english_prompts/STE-019.mp3" 
-      r.Record maxLength: '30', finishOnKey: '#'  
+      r.Record maxLength: "30", finishOnKey: "#", playBeep: "true"  
       r.Play "http://75.119.204.130/ivr/english_prompts/STE-020.mp3" 
-      r.Record maxLength: '30', finishOnKey: '#'
+      r.Record maxLength: "30", finishOnKey: "#", playBeep: "true"  
     end
     render text: response.text
   end
