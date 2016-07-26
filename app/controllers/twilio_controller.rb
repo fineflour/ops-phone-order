@@ -12,10 +12,19 @@ ENG_MP3 = ['./audio/eng/STE-019.mp3','./audio/eng/STE-020.mp3', 'STE-021', 'STE-
   # POST ivr/welcome
   def ivr_welcome
     response = Twilio::TwiML::Response.new do |r|
-      r.Gather finishOnKey: '#', action: menu_path do |g|
-          g.Play "http://75.119.204.130/ivr/english_prompts/STE-019.mp3", loop: 3
-          g.Record :maxLength => '30' 
-      end
+      #r.Gather action: menu_path do |g|
+      r.Play "http://75.119.204.130/ivr/english_prompts/STE-019.mp3" 
+      r.Record :maxLength => '30', finishOnKey: '#',  action: test
+      #end
+    end
+    render text: response.text
+  end
+
+  def test
+    response = Twilio::TwiML::Response.new do |r|
+      #r.Gather action: menu_path do |g|
+      r.Play "http://75.119.204.130/ivr/english_prompts/STE-020.mp3" 
+      r.Record :maxLength => '30', finishOnKey: '#',  action: test
     end
     render text: response.text
   end
