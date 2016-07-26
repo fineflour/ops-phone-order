@@ -15,10 +15,10 @@ ENG_MP3 = ['./audio/eng/STE-019.mp3','./audio/eng/STE-020.mp3', 'STE-021', 'STE-
       #r.Gather action: menu_path do |g|
   #first name
       r.Play "http://75.119.204.130/ivr/english_prompts/STE-019.mp3" 
-        r.Record maxLength: "30", finishOnKey: "#", playBeep: "true" 
+        r.Record maxLength: "10", finishOnKey: "#", playBeep: "true" 
   #last name
       r.Play "http://75.119.204.130/ivr/english_prompts/STE-020.mp3" 
-        r.Record maxLength: "30", finishOnKey: "#", playBeep: "true"  
+        r.Record maxLength: "10", finishOnKey: "#", playBeep: "true"  
     end
     render text: response.text
   end
