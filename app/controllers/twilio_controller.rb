@@ -3,7 +3,7 @@ require 'sanitize'
 
 
 class TwilioController < ApplicationController
-  
+
   def index
     render text: "Dial Me."
   end
@@ -11,27 +11,27 @@ class TwilioController < ApplicationController
   # POST ivr/welcome
   def ivr_welcome
     response = Twilio::TwiML::Response.new do |r|
-      r.Gather numDigits: '#', action: first_name_path do |g|
-        g.Play "http://75.119.204.130/ivr/english_prompts/STE-019.mp3", loop: 1
-        g.Record finishOnKey: "#", playBeep: true, maxLength: '20'     
-      end
+      r.Play "http://75.119.204.130/ivr/english_prompts/STE-019.mp3"
+      r.Record finishOnKey: "#", playBeep: true, maxLength: '10', action: first_name_path     
     end
     render text: response.text
   end
 
   def first_name
-  response = Twilio::TwiML::Response.new do |r|
-      r.Gather numDigits: '#', action: last_name_path do |g|
-        g.Play "http://75.119.204.130/ivr/english_prompts/STE-020.mp3", loop: 1
-        g.Record finishOnKey: "#", playBeep: true, maxLength: '20'     
-      end
+    response = Twilio::TwiML::Response.new do |r|
+      r.Play "http://75.119.204.130/ivr/english_prompts/STE-020.mp3"
+      r.Record finishOnKey: "#", playBeep: true, maxLength: '20', action: last_name_path     
     end
     render text: response.text
   end
 
 
   def last_name
-
+    Twilio::TwiML::Response.new do |r|
+      r.Say 'Listen to your monkey howl.'
+      r.Play params['RecordingUrl']
+      r.Say 'Goodbye.'
+    end.text
   end
 
   # GET ivr/selection
