@@ -3,7 +3,7 @@ require 'sanitize'
 
 
 class TwilioController < ApplicationController
-  
+
   def index
     render text: "Dial Me."
   end
@@ -11,35 +11,21 @@ class TwilioController < ApplicationController
   # POST ivr/welcome
   def ivr_welcome
     response = Twilio::TwiML::Response.new do |r|
-      r.Gather finishOnKey: '#', action: menu_path do |g|
-        g.Play "https://75.119.204.130/ivr/english_prompts/STE-019.mp3", loop: 1
-        g.Record finishOnKey: '#', playBeep: "true"
-      end
+      r.Play "https://75.119.204.130/ivr/english_prompts/STE-019.mp3" 
+      r.Record finishOnKey: '#', playBeep: "true", action: choose_book
     end
-    render text: response.text
+    response.text
   end
 
   # GET ivr/selection
-  def menu_selection
-    user_selection = params[:Digits]
-
-    case user_selection
-    when "#"
+  def choose_book
     response = Twilio::TwiML::Response.new do |r|
-      r.Gather finishOnKey: '#', action: menu_path do |g|
-        g.Play "https://75.119.204.130/ivr/english_prompts/STE-020.mp3", loop: 1
-        g.Record finishOnKey: '#', playBeep: "true"
-      end
+      r.Play "https://75.119.204.130/ivr/english_prompts/STE-020.mp3", loop: 1
+      r.Record finishOnKey: '#', playBeep: "true", action: first_name
     end
     render text: response.text
-    when "2"
-      list_planets
-    else
-      @output = "Returning to the main menu."
-      twiml_say(@output)
-    end
-
   end
+
 
   # POST/GET ivr/planets 
   # planets_path
