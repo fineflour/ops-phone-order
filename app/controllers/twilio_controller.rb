@@ -24,7 +24,12 @@ class TwilioController < ApplicationController
 
     case user_selection
     when "1"
-      g.Play "https://75.119.204.130/ivr/english_prompts/STE-019.mp3", loop: 1
+    response = Twilio::TwiML::Response.new do |r|
+      r.Gather numDigits: '1', action: menu_path do |g|
+        g.Play "https://75.119.204.130/ivr/english_prompts/STE-019.mp3", loop: 1
+      end
+    end
+    render text: response.text
     when "2"
       list_planets
     else
