@@ -12,4 +12,7 @@ Rails.application.routes.draw do
   # callback for planet entry
   match 'ivr/planets' => 'twilio#planet_selection', via: [:get, :post], as: 'planets'
 
+  match 'ivr/first_name' => 'twilio#first_name', via: [:get, :post], as: 'first_name'
+  match 'ivr/last_name' => 'twilio#last_name', via: [:get, :post], as: 'last_name'
+
 end

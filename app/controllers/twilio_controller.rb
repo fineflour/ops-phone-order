@@ -11,9 +11,9 @@ class TwilioController < ApplicationController
   # POST ivr/welcome
   def ivr_welcome
     response = Twilio::TwiML::Response.new do |r|
-      r.Gather numDigits: '#', action: first_name do |g|
+      r.Gather numDigits: '#', action: first_name_path do |g|
         g.Play "http://75.119.204.130/ivr/english_prompts/STE-019.mp3", loop: 1
-        g.Record finishOnKey: '#'      
+        g.Record finishOnKey: "#", playBeep: true, maxLength: '20'     
       end
     end
     render text: response.text
@@ -21,9 +21,9 @@ class TwilioController < ApplicationController
 
   def first_name
   response = Twilio::TwiML::Response.new do |r|
-      r.Gather numDigits: '#', action: last_name do |g|
+      r.Gather numDigits: '#', action: last_name_path do |g|
         g.Play "http://75.119.204.130/ivr/english_prompts/STE-020.mp3", loop: 1
-        g.Record finishOnKey: '#'      
+        g.Record finishOnKey: "#", playBeep: true, maxLength: '20'     
       end
     end
     render text: response.text
