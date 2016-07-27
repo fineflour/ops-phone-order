@@ -10,20 +10,17 @@ class TwilioController < ApplicationController
 
   # POST ivr/welcome
   def ivr_welcome
-    response = Twilio::TwiML::Response.new do |r|
+    Twilio::TwiML::Response.new do |r|
       r.Play "https://75.119.204.130/ivr/english_prompts/STE-019.mp3" 
       r.Record finishOnKey: '#', playBeep: "true", action: choose_book
     end
-    response.text
   end
 
-  # GET ivr/selection
   def choose_book
-    response = Twilio::TwiML::Response.new do |r|
+    Twilio::TwiML::Response.new do |r|
       r.Play "https://75.119.204.130/ivr/english_prompts/STE-020.mp3", loop: 1
       r.Record finishOnKey: '#', playBeep: "true", action: first_name
     end
-    render text: response.text
   end
 
 
