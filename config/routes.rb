@@ -16,7 +16,6 @@ Rails.application.routes.draw do
   match 'ivr/state' => 'twilio#state', via: [:get, :post], as: 'state'
   match 'ivr/telephone' => 'twilio#telephone', via: [:get, :post], as: 'telephone'
   match 'ivr/email' => 'twilio#email', via: [:get, :post], as: 'email'
-  match 'ivr/city' => 'twilio#city', via: [:get, :post], as: 'city'
   match 'ivr/thankyou' => 'twilio#thankyou', via: [:get, :post], as: 'thankyou'
 
 end
