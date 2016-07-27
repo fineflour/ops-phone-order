@@ -20,7 +20,7 @@ class TwilioController < ApplicationController
   def first_name
     response = Twilio::TwiML::Response.new do |r|
       r.Play "http://75.119.204.130/ivr/english_prompts/STE-020.mp3"
-      r.Record finishOnKey: "#", playBeep: true, maxLength: '20', CallStatus: 'in-progress', action: last_name_path     
+      r.Record finishOnKey: "#", playBeep: true, maxLength: '20', action: last_name_path     
     end
     render text: response.text
   end
@@ -29,7 +29,7 @@ class TwilioController < ApplicationController
   def last_name
     response = Twilio::TwiML::Response.new do |r|
       r.Play "http://75.119.204.130/ivr/english_prompts/STE-021.mp3"
-      r.Record finishOnKey: "#", playBeep: true, maxLength: '20', CallStatus: 'in-progress', action: zipcode_path
+      r.Record finishOnKey: "#", playBeep: true, maxLength: '20', action: zipcode_path
     end
     render text: response.text
   end
@@ -37,7 +37,7 @@ class TwilioController < ApplicationController
   def zipcode
     response = Twilio::TwiML::Response.new do |r|
       r.Play "http://75.119.204.130/ivr/english_prompts/STE-022.mp3"
-      r.Record finishOnKey: "#", playBeep: true, maxLength: '20', CallStatus: 'in-progress', action: street_address_path 
+      r.Record finishOnKey: "#", playBeep: true, maxLength: '20', action: street_address_path 
     end
     render text: response.text
   end
@@ -45,7 +45,7 @@ class TwilioController < ApplicationController
   def street_address
     response = Twilio::TwiML::Response.new do |r|
       r.Play "http://75.119.204.130/ivr/english_prompts/STE-024.mp3"
-      r.Record finishOnKey: "#", playBeep: true, maxLength: '20', CallStatus: 'in-progress', action: city_path
+      r.Record finishOnKey: "#", playBeep: true, maxLength: '20', action: city_path
     end
     render text: response.text
   end
@@ -53,7 +53,7 @@ class TwilioController < ApplicationController
   def city
     response = Twilio::TwiML::Response.new do |r|
       r.Play "http://75.119.204.130/ivr/english_prompts/STE-025.mp3"
-      r.Record finishOnKey: "#", playBeep: true, maxLength: '20', CallStatus: 'in-progress', action: state_path
+      r.Record finishOnKey: "#", playBeep: true, maxLength: '20', action: state_path
     end
     render text: response.text
   end
@@ -62,7 +62,7 @@ class TwilioController < ApplicationController
   def state
     response = Twilio::TwiML::Response.new do |r|
       r.Play "http://75.119.204.130/ivr/english_prompts/STE-026.mp3"
-      r.Record finishOnKey: "#", playBeep: true, maxLength: '20', CallStatus: 'in-progress', action: telephone_path
+      r.Record finishOnKey: "#", playBeep: true, maxLength: '20', action: telephone_path
     end
     render text: response.text
   end
@@ -79,7 +79,7 @@ class TwilioController < ApplicationController
   def email
     response = Twilio::TwiML::Response.new do |r|
       r.Play "http://75.119.204.130/ivr/english_prompts/STE-030.mp3"
-      r.Record finishOnKey: "#", playBeep: true, maxLength: '20', CallStatus: 'in-progress', action: thankyou_path
+      r.Record finishOnKey: "#", playBeep: true, maxLength: '20', action: thankyou_path
     end
     render text: response.text
   end
