@@ -20,7 +20,7 @@ class TwilioController < ApplicationController
   def first_name
     response = Twilio::TwiML::Response.new do |r|
       r.Play "http://75.119.204.130/ivr/english_prompts/STE-020.mp3"
-      r.Record finishOnKey: "#", playBeep: true, maxLength: '20', RecordingUrl: params['RecordingUrl'], action: last_name_path     
+      r.Record finishOnKey: "#", playBeep: true, maxLength: '20', CallStatus: 'in-progress', RecordingUrl: params['RecordingUrl'], action: last_name_path     
     end
     render text: response.text
   end
@@ -29,7 +29,7 @@ class TwilioController < ApplicationController
   def last_name
     response = Twilio::TwiML::Response.new do |r|
       r.Play "http://75.119.204.130/ivr/english_prompts/STE-021.mp3"
-      r.Record finishOnKey: "#", playBeep: true, maxLength: '20', RecordingUrl: params['RecordingUrl']     
+      r.Record finishOnKey: "#", playBeep: true, maxLength: '20', CallStatus: 'in-progress', RecordingUrl: params['RecordingUrl']     
     end
     render text: response.text
   end
