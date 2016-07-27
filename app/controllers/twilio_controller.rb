@@ -10,19 +10,41 @@ class TwilioController < ApplicationController
 
   # POST ivr/welcome
   def ivr_welcome
-    Twilio::TwiML::Response.new do |r|
-      r.Play "https://75.119.204.130/ivr/english_prompts/STE-019.mp3" 
-      r.Record finishOnKey: '#', playBeep: "true", action: choose_book
+    response = Twilio::TwiML::Response.new do |r|
+      r.Play "http://75.119.204.130/ivr/english_prompts/STE-019.mp3", loop: 1
+      r.Record finishOnKey: '#', action: first_name, method: get
     end
+    render text: response.text
   end
 
-  def choose_book
-    Twilio::TwiML::Response.new do |r|
-      r.Play "https://75.119.204.130/ivr/english_prompts/STE-020.mp3", loop: 1
-      r.Record finishOnKey: '#', playBeep: "true", action: first_name
+
+  def first_name
+    response = Twilio::TwiML::Response.new do |r|
+      r.Play "http://75.119.204.130/ivr/english_prompts/STE-020.mp3", loop: 1
+      r.Record finishOnKey: '#', action: menu_path, method: get
     end
+    render text: response.text
   end
 
+  # GET ivr/selection
+  def menu_selection
+    user_selection = params[:Digits]
+
+    case user_selection
+    when "1"
+      @output = "To get to your extraction point, get on your bike and go down
+        the street. Then Left down an alley. Avoid the police cars. Turn left
+        into an unfinished housing development. Fly over the roadblock. Go
+        passed the moon. Soon after you will see your mother ship."
+      twiml_say(@output, true)
+    when "2"
+      list_planets
+    else
+      @output = "Returning to the main menu."
+      twiml_say(@output)
+    end
+
+  end
 
   # POST/GET ivr/planets 
   # planets_path
