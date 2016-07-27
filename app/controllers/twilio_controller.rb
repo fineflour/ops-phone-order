@@ -1,9 +1,8 @@
 require 'twilio-ruby'
 require 'sanitize'
 
-class TwilioController < ApplicationController
 
-ENG_MP3 = ['./audio/eng/STE-019.mp3','./audio/eng/STE-020.mp3', 'STE-021', 'STE-022', 'STE-024', 'STE-025', 'STE-026', 'STE-028', 'SET-030', 'SET--037']
+class TwilioController < ApplicationController
   
   def index
     render text: "Dial Me."
@@ -12,22 +11,9 @@ ENG_MP3 = ['./audio/eng/STE-019.mp3','./audio/eng/STE-020.mp3', 'STE-021', 'STE-
   # POST ivr/welcome
   def ivr_welcome
     response = Twilio::TwiML::Response.new do |r|
-      #r.Gather action: menu_path do |g|
-  #first name
-      r.Play "http://75.119.204.130/ivr/english_prompts/STE-019.mp3" 
-        r.Record maxLength: "10", finishOnKey: "#", playBeep: "true" 
-  #last name
-      r.Play "http://75.119.204.130/ivr/english_prompts/STE-020.mp3" 
-        r.Record maxLength: "10", finishOnKey: "#", playBeep: "true"  
-    end
-    render text: response.text
-  end
-
-  def test
-    response = Twilio::TwiML::Response.new do |r|
-      #r.Gather action: menu_path do |g|
-      r.Play "http://75.119.204.130/ivr/english_prompts/STE-020.mp3" 
-      r.Record maxLength: '30', finishOnKey: '#',  action: test
+      r.Gather numDigits: '1', action: menu_path do |g|
+        g.Play "http://howtodocs.s3.amazonaws.com/et-phone.mp3", loop: 3
+      end
     end
     render text: response.text
   end
@@ -38,11 +24,7 @@ ENG_MP3 = ['./audio/eng/STE-019.mp3','./audio/eng/STE-020.mp3', 'STE-021', 'STE-
 
     case user_selection
     when "1"
-      @output = "To get to your extraction point, get on your bike and go down
-        the street. Then Left down an alley. Avoid the police cars. Turn left
-        into an unfinished housing development. Fly over the roadblock. Go
-        passed the moon. Soon after you will see your mother ship."
-      twiml_say(@output, true)
+      g.Play "https://75.119.204.130/ivr/english_prompts/STE-019.mp3", loop: 1
     when "2"
       list_planets
     else
