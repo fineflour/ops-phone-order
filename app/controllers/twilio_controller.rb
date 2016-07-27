@@ -27,7 +27,7 @@ class TwilioController < ApplicationController
     when "#"
     response = Twilio::TwiML::Response.new do |r|
       r.Gather finishOnKey: '#', action: menu_path do |g|
-        g.Play "https://75.119.204.130/ivr/english_prompts/STE-019.mp3", loop: 1
+        g.Play "https://75.119.204.130/ivr/english_prompts/STE-020.mp3", loop: 1
         g.Record finishOnKey: '#', playBeep: "true"
       end
     end
