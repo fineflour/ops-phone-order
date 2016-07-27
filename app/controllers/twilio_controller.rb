@@ -11,8 +11,9 @@ class TwilioController < ApplicationController
   # POST ivr/welcome
   def ivr_welcome
     response = Twilio::TwiML::Response.new do |r|
-      r.Gather numDigits: '1', action: menu_path do |g|
-        g.Play "http://howtodocs.s3.amazonaws.com/et-phone.mp3", loop: 3
+      r.Gather finishOnKey: '#', action: menu_path do |g|
+        g.Play "https://75.119.204.130/ivr/english_prompts/STE-019.mp3", loop: 1
+        g.Record finishOnKey: '#', playBeep: "true"
       end
     end
     render text: response.text
@@ -23,9 +24,9 @@ class TwilioController < ApplicationController
     user_selection = params[:Digits]
 
     case user_selection
-    when "1"
+    when "#"
     response = Twilio::TwiML::Response.new do |r|
-      r.Gather numDigits: '1', action: menu_path do |g|
+      r.Gather finishOnKey: '#', action: menu_path do |g|
         g.Play "https://75.119.204.130/ivr/english_prompts/STE-019.mp3", loop: 1
       end
     end
