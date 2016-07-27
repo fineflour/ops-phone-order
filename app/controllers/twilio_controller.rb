@@ -3,7 +3,7 @@ require 'sanitize'
 
 
 class TwilioController < ApplicationController
-
+  
   def index
     render text: "Dial Me."
   end
@@ -11,17 +11,20 @@ class TwilioController < ApplicationController
   # POST ivr/welcome
   def ivr_welcome
     response = Twilio::TwiML::Response.new do |r|
-      r.Play "http://75.119.204.130/ivr/english_prompts/STE-019.mp3", loop: 1
-      r.Record finishOnKey: '#', action: first_name, method: get
+      r.Gather numDigits: '#', action: first_name do |g|
+        g.Play "http://75.119.204.130/ivr/english_prompts/STE-019.mp3", loop: 1
+        g.Record finishOnKey: '#'      
+      end
     end
     render text: response.text
   end
 
-
   def first_name
-    response = Twilio::TwiML::Response.new do |r|
-      r.Play "http://75.119.204.130/ivr/english_prompts/STE-020.mp3", loop: 1
-      r.Record finishOnKey: '#', action: menu_path, method: get
+  response = Twilio::TwiML::Response.new do |r|
+      r.Gather numDigits: '#', action: last_name do |g|
+        g.Play "http://75.119.204.130/ivr/english_prompts/STE-020.mp3", loop: 1
+        g.Record finishOnKey: '#'      
+      end
     end
     render text: response.text
   end
